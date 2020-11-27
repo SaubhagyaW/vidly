@@ -6,6 +6,8 @@ Full fledged Node JS project for a Movie rental shop.
 2. CRUD operations to handle movies.
 3. CRUD operations to handle customers.
 4. Create/Read operations to handle rentals.
+    - Before renting out a movie, should check for availability in stock.
+    - When a movie is rented out, movies in stock should also be updated accordingly.
 
 ## Implementation Details
 1. DB -> Mongoose
