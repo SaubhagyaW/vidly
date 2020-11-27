@@ -1,0 +1,8 @@
+{
+    "env": "development",
+    "SERVER_PORT": 3000,
+    "database": {
+        "MONGO_URL": "mongodb://localhost",
+        "DB_NAME": "vidly"
+    }
+}
