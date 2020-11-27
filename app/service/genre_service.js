@@ -1,4 +1,6 @@
+const { Genre } = require('../model/genre');
 const GenreRepository = require('../repository/genre_repository');
+
 const genreRepository = new GenreRepository();
 
 const _buildGenre = Symbol();
