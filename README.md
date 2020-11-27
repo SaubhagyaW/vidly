@@ -21,14 +21,14 @@ Full fledged Node JS project for a Movie rental shop.
 7. TDD (Unit/Integration testing)
 8. Deployment
 
-## TODO
+## FIX-ME
 1. Upgrade to latest ES version (ES10).
-2. Resolve npm vulnerability warnings
+2. Resolve npm vulnerability warnings.
 3. Define the global constants correctly.
 4. Make Genre "name" immutable.
 5. Make Two phase commit work.
 
-## Future Enhancements
+## TODO
 1. Logging and error handling. (Use template strings)
 2. Implement authentication and authorization layer.
 3. Unit testing/Integration testing/TDD
