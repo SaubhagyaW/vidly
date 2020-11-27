@@ -1,3 +1,4 @@
+const { Rental } = require('../model/rental');
 const RentalRepository = require('../repository/rental_repository');
 const CustomerRepository = require('../repository/customer_repository');
 const MovieRepository = require('../repository/movie_repository');

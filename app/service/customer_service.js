@@ -1,4 +1,6 @@
+const { Customer } = require('../model/customer');
 const CustomerRepository = require('../repository/customer_repository');
+
 const customerRepository = new CustomerRepository();
 
 const _buildCustomer = Symbol();

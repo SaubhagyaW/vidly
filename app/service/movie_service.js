@@ -1,6 +1,6 @@
+const { Movie } = require('../model/movie');
 const MovieRepository = require('../repository/movie_repository');
 const GenreRepository = require('../repository/genre_repository');
-const { Movie } = require('../model/movie');
 
 const movieRepository = new MovieRepository();
 const genreRepository = new GenreRepository();
