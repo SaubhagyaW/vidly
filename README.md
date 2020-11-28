@@ -19,7 +19,8 @@ Full fledged Node JS project for a Movie rental shop.
     - Error handling middleware implemented.
 3. Logging and error handling implemented for Genres.
     - Winston module is used.
-    - Log output is written to console as well as files.
+    - Log levels/format/colorization configured.
+    - Log output is written to console and files (File rotation configured).
 4. Authentication and authorization layer implemented for Genres.
 5. Cross cutting feature implemented (Trace Id).
 6. Env variables configured (Using config module).
