@@ -1,6 +1,8 @@
 const logger = require('winston');
 const express = require('express');
 
+const authenticate = require('../middleware/authenticate');
+const authorize = require('../middleware/authorize');
 const { validate } = require('../model/genre');
 const GenreService = require('../service/genre_service');
 
@@ -9,7 +11,7 @@ const genreService = new GenreService();
 // Router to handle Genre requests
 const genreRouter = express.Router();
 
-genreRouter.post('/', async (req, res, next) => {
+genreRouter.post('/', authenticate, async (req, res, next) => {
     logger.info(`Request received to create genre - ${JSON.stringify(req.body)}`);
 
     let { error } = validate(req.body);
@@ -17,9 +19,9 @@ genreRouter.post('/', async (req, res, next) => {
         return next({ statusCode: 400 });
 
     try {
-        let result = await genreService.createGenre(req.body);
+        let result = await genreService.createGenre(req.body, req.user);
         logger.info(`Genre created - ${JSON.stringify(result)}`);
-        
+
         res.send(result);
     } catch (err) {
         return next({ statusCode: 500, ex: err });
@@ -60,7 +62,7 @@ genreRouter.get('/:id', async (req, res) => {
     }
 });
 
-genreRouter.put('/:id', async (req, res, next) => {
+genreRouter.put('/:id', authenticate, async (req, res, next) => {
     let genreId = req.params.id;
     logger.info(`Request received to update genre for Id: ${genreId} - ${JSON.stringify(req.body)}`);
 
@@ -69,7 +71,7 @@ genreRouter.put('/:id', async (req, res, next) => {
         return next({ statusCode: 404, msg: `No Genres found for Id: ${genreId}` });
 
     try {
-        let result = await genreService.updateGenre(genreId, req.body);
+        let result = await genreService.updateGenre(genreId, req.body, req.user);
 
         if (!result)
             return next({ statusCode: 404, msg: `No Genres found for Id: ${genreId}` });
@@ -81,7 +83,8 @@ genreRouter.put('/:id', async (req, res, next) => {
     }
 });
 
-genreRouter.delete('/:id', async (req, res) => {
+// User must have admin permissions to delete a genre.
+genreRouter.delete('/:id', [authenticate, authorize], async (req, res) => {
     let genreId = req.params.id;
     logger.info(`Request received to delete genre for Id: ${genreId}`);
 

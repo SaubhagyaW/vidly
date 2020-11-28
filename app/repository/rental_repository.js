@@ -74,7 +74,7 @@ class RentalRepository {
     //             $currentDate: {
     //                 updatedAt: 1
     //             }
-    //         }, { new: true, useFindAndModify: false, runValidators: true });
+    //         });
     //     } catch (err) {
     //         console.error('Error occurred while updating Rental for Id: ' + id, err);
     //         throw new Error('Error occurred while updating Rental for Id: ' + id, err);
@@ -83,7 +83,7 @@ class RentalRepository {
 
     async deleteRental(id) {
         try {
-            return await Rental.findByIdAndRemove(id, { useFindAndModify: false });
+            return await Rental.findByIdAndRemove(id);
         } catch (err) {
             console.error('Error occurred while deleting Rental for Id: ' + id, err);
             throw new Error('Error occurred while deleting Rental for Id: ' + id, err);

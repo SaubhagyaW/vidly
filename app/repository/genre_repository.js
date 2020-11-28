@@ -48,7 +48,7 @@ class GenreRepository {
                 $currentDate: {
                     updatedAt: 1
                 }
-            }, { new: true, useFindAndModify: false });
+            });
         } catch (err) {
             logger.error('Error occurred while updating Genre for Id: ' + id, err);
             throw new Error('Error occurred while updating Genre for Id: ' + id, err);
@@ -57,7 +57,7 @@ class GenreRepository {
 
     async deleteGenre(id) {
         try {
-            return await Genre.findByIdAndRemove(id, { useFindAndModify: false });
+            return await Genre.findByIdAndRemove(id);
         } catch (err) {
             logger.error('Error occurred while deleting Genre for Id: ' + id, err);
             throw new Error('Error occurred while deleting Genre for Id: ' + id, err);

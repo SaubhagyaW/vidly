@@ -4,13 +4,13 @@ const Joi = require('joi');
 const { Movie } = require('./movie');
 const { Customer } = require('./customer');
 
-// Request validation schema for Rental
-const rentalSchema_joi = Joi.object({
-    customerId: Joi.objectId().required(),
-    movieId: Joi.objectId().required()
-});
-
 function validateRental(body) {
+    // Request validation schema for Rental
+    const rentalSchema_joi = Joi.object({
+        customerId: Joi.objectId().required(),
+        movieId: Joi.objectId().required()
+    });
+
     return rentalSchema_joi.validate(body);
 }
 

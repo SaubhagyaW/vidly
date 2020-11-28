@@ -54,7 +54,7 @@ class MovieRepository {
                 $currentDate: {
                     updatedAt: 1
                 }
-            }, { new: true, useFindAndModify: false, runValidators: true });
+            });
         } catch (err) {
             console.error('Error occurred while updating Movie for Id: ' + id, err);
             throw new Error('Error occurred while updating Movie for Id: ' + id, err);
@@ -63,7 +63,7 @@ class MovieRepository {
 
     async deleteMovie(id) {
         try {
-            return await Movie.findByIdAndRemove(id, { useFindAndModify: false });
+            return await Movie.findByIdAndRemove(id);
         } catch (err) {
             console.error('Error occurred while deleting Movie for Id: ' + id, err);
             throw new Error('Error occurred while deleting Movie for Id: ' + id, err);

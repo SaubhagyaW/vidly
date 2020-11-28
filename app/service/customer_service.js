@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const { Customer } = require('../model/customer');
 const CustomerRepository = require('../repository/customer_repository');
 
@@ -49,11 +51,7 @@ class CustomerService {
     }
 
     [_buildCustomer](payload) {
-        return new Customer({
-            name: payload.name,
-            phone: payload.phone,
-            isGold: payload.isGold
-        });
+        return new Customer(_.pick(payload, ['name', 'phone', 'isGold']));
     }
 }
 

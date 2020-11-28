@@ -48,7 +48,7 @@ class CustomerRepository {
                 $currentDate: {
                     updatedAt: 1
                 }
-            }, { new: true, useFindAndModify: false });
+            });
         } catch (err) {
             console.error('Error occurred while updating Customer for Id: ' + id, err);
             throw new Error('Error occurred while updating Customer for Id: ' + id, err);
@@ -57,7 +57,7 @@ class CustomerRepository {
 
     async deleteCustomer(id) {
         try {
-            return await Customer.findByIdAndRemove(id, { useFindAndModify: false });
+            return await Customer.findByIdAndRemove(id);
         } catch (err) {
             console.error('Error occurred while deleting Customer for Id: ' + id, err);
             throw new Error('Error occurred while deleting Customer for Id: ' + id, err);

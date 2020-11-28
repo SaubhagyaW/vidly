@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-// Request validation schema for Customer
-const customerSchema_joi = Joi.object({
-    name: Joi.string().required().min(5).max(50),
-    phone: Joi.string().required().min(9).max(10),
-    isGold: Joi.boolean()
-});
-
 function validateCustomer(body) {
+    // Request validation schema for Customer
+    const customerSchema_joi = Joi.object({
+        name: Joi.string().required().min(5).max(50),
+        phone: Joi.string().required().min(9).max(10),
+        isGold: Joi.boolean()
+    });
+
     return customerSchema_joi.validate(body);
 }
 
