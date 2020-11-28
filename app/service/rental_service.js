@@ -9,6 +9,7 @@ const movieRepository = new MovieRepository();
 
 const _buildRental = Symbol();
 
+// Service layer for Rental related operations
 class RentalService {
     async createRental(payload) {
         try {

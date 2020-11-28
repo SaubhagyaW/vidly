@@ -5,6 +5,7 @@ const genreRepository = new GenreRepository();
 
 const _buildGenre = Symbol();
 
+// Service layer for Genre related operations
 class GenreService {
     async createGenre(payload) {
         try {

@@ -5,6 +5,7 @@ const customerRepository = new CustomerRepository();
 
 const _buildCustomer = Symbol();
 
+// Service layer for Customer related operations
 class CustomerService {
     async createCustomer(payload) {
         try {

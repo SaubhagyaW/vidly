@@ -6,7 +6,7 @@ const { Genre } = require('./genre');
 // Request validation schema for Movie
 const movieSchema_joi = Joi.object({
     title: Joi.string().required().min(0).max(255).trim(true),
-    genreId: Joi.string().required(),
+    genreId: Joi.objectId().required(),
     numberInStock: Joi.number().required().min(0),
     dailyRentalRate: Joi.number().required().min(0)
 });

@@ -1,3 +1,5 @@
+const logger = require('winston');
+
 const Constants = require('../util/constants');
 const { Genre } = require('../model/genre');
 
@@ -7,7 +9,7 @@ class GenreRepository {
         try {
             return await genre.save();
         } catch (err) {
-            console.error('Error occurred while saving Genre data.', err);
+            logger.error('Error occurred while saving Genre data.', err);
             throw new Error('Error occurred while saving Genre data.', err);
         }
     }
@@ -21,7 +23,7 @@ class GenreRepository {
                 .sort('name')
                 .select(Constants.hiddenFields);
         } catch (err) {
-            console.error('Error occurred while retrieving Genre data.', err);
+            logger.error('Error occurred while retrieving Genre data.', err);
             throw new Error('Error occurred while retrieving Genre data.', err);
         }
     }
@@ -32,7 +34,7 @@ class GenreRepository {
                 .findById(id)
                 .select(Constants.hiddenFields);
         } catch (err) {
-            console.error('Error occurred while retrieving Genre for Id: ' + id, err);
+            logger.error('Error occurred while retrieving Genre for Id: ' + id, err);
             throw new Error('Error occurred while retrieving Genre for Id: ' + id, err);
         }
     }
@@ -48,7 +50,7 @@ class GenreRepository {
                 }
             }, { new: true, useFindAndModify: false });
         } catch (err) {
-            console.error('Error occurred while updating Genre for Id: ' + id, err);
+            logger.error('Error occurred while updating Genre for Id: ' + id, err);
             throw new Error('Error occurred while updating Genre for Id: ' + id, err);
         }
     }
@@ -57,7 +59,7 @@ class GenreRepository {
         try {
             return await Genre.findByIdAndRemove(id, { useFindAndModify: false });
         } catch (err) {
-            console.error('Error occurred while deleting Genre for Id: ' + id, err);
+            logger.error('Error occurred while deleting Genre for Id: ' + id, err);
             throw new Error('Error occurred while deleting Genre for Id: ' + id, err);
         }
     }

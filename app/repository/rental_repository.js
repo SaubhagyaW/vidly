@@ -3,6 +3,7 @@ const Fawn = require('fawn');
 const Constants = require('../util/constants');
 const { Rental } = require('../model/rental');
 
+// Repository to handle Rental data
 class RentalRepository {
     async createRental(rental) {
         try {

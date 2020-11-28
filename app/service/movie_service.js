@@ -7,6 +7,7 @@ const genreRepository = new GenreRepository();
 
 const _buildMovie = Symbol();
 
+// Service layer for Movie related operations
 class MovieService {
     async createMovie(payload) {
         try {

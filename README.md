@@ -16,7 +16,10 @@ Full fledged Node JS project for a Movie rental shop.
     - Two phase commits (Transactions) implemented in create rentals (Using Fawn module).
 2. REST framework -> Express
     - API level validations (Using Joi module).
+    - Error handling middleware implemented.
 3. Logging and error handling implemented for Genres.
+    - Winston module is used.
+    - Log output is written to console as well as files.
 4. Authentication and authorization layer implemented for Genres.
 5. Cross cutting feature implemented (Trace Id).
 6. Env variables configured (Using config module).
@@ -29,9 +32,9 @@ Full fledged Node JS project for a Movie rental shop.
 3. Define the global constants correctly.
 4. Make Genre "name" immutable.
 5. Make Two phase commit work.
+6. Add proper log format, colorize and file rotation configs.
 
 ## TODO
-1. Logging and error handling. (Use template strings)
 2. Implement authentication and authorization layer.
 3. Unit testing/Integration testing/TDD
 4. Deployment
