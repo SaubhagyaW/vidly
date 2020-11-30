@@ -2,7 +2,7 @@ const { func } = require("joi");
 
 const logger = require('winston');
 
-// Error middleware
+// Error response middleware
 module.exports = function (err, req, res, next) {
     switch (err.statusCode) {
         case 400:

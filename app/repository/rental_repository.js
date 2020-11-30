@@ -7,7 +7,7 @@ const { Rental } = require('../model/rental');
 class RentalRepository {
     async createRental(rental) {
         try {
-            // FIX-ME
+            // FIXME
             // Transaction
             return await new Fawn.Task()
                 .save('rentals', rental)

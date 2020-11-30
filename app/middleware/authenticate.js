@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const config = require('config');
 
+// Authentication middleware
 module.exports = function (req, res, next) {
     const token = req.header('x-jwt-token');
 

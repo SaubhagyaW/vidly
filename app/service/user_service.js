@@ -42,7 +42,6 @@ class UserService {
         } catch (err) {
             throw err;
         }
-
     }
 }
 
