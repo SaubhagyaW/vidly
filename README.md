@@ -32,7 +32,7 @@ Full fledged Node JS project for a Movie rental shop.
 8. TDD (Unit/Integration testing)
 9. Deployment
 
-## FIX-ME
+## FIXME
 1. Upgrade to latest ES version (ES10).
 2. Resolve npm vulnerability warnings.
 3. Make Genre "name" immutable.
