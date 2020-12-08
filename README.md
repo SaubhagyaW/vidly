@@ -31,20 +31,19 @@ Full fledged Node JS project for a Movie rental shop.
 7. Env variables configured (Using config module).
 8. TDD (Unit/Integration testing)
 9. Deployment
-
-## FIXME
-1. Upgrade to latest ES version (ES10).
-2. Resolve npm vulnerability warnings.
-3. Make Genre "name" immutable.
-4. Make Two phase commit work.
-5. Define the global constants correctly.
-6. Add proper log format, colors and file rotation configs.
-7. Configure env variables correctly.
+    - Helmet and compression modules are used to handle security and improve performance in Production.
 
 ## TODO
-1. Unit testing/Integration testing/TDD
-2. Deployment
-3. Implement trace Id. (Check modules -> helmet, morgan)
+1. Upgrade to latest ES version (ES10).
+2. Review Controller-Service-Repository pattern.
+3. Resolve npm vulnerability warnings.
+4. Define the global constants correctly. 
+5. Make Genre "name" immutable.
+6. Make Two phase commit work.
+7. Add proper log format, colors and file rotation configs.
+8. Configure env variables correctly.
+9. Dockerize
+10. Implement trace Id. (Check modules -> helmet, morgan)
 
 ## API Specification
 

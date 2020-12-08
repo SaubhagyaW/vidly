@@ -13,6 +13,10 @@ const app = express();
 app.use(express.json());
 require('./init/routes')(app);
 
+// Load modules necessary for Prod env.
+if (config.get('env') === 'production')
+    require('./init/prod')(app);
+
 // Start server
 const port = config.get('SERVER_PORT') || 3000;
 app.listen(port, function () {

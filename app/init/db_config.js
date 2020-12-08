@@ -19,4 +19,4 @@ module.exports = function () {
 
     // Initialize "Fawn" package to handle Transactions (i.e. Two phase commits in Mongo DB)
     Fawn.init(mongoose);
-}
+};
