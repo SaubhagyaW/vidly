@@ -19,6 +19,8 @@ if (config.get('env') === 'production')
 
 // Start server
 const port = config.get('SERVER_PORT') || 3000;
-app.listen(port, function () {
+const server = app.listen(port, function () {
     console.log(`Listening on port ${port}...`);
 });
+
+module.exports = server;

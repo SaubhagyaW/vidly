@@ -1,0 +1,10 @@
+{
+    "env": "test",
+    "SERVER_PORT": 3000,
+    "LOG_LEVEL": "info",
+    "database": {
+        "MONGO_URL": "mongodb://localhost",
+        "DB_NAME": "vidly_test"
+    },
+    "PVT_KEY": "JWT Signature"
+}

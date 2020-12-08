@@ -44,6 +44,9 @@ Full fledged Node JS project for a Movie rental shop.
 8. Configure env variables correctly.
 9. Dockerize
 10. Implement trace Id. (Check modules -> helmet, morgan)
+11. /returns API
+
+GitHub link: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
 
 ## API Specification
 

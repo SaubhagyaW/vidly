@@ -1,5 +1,6 @@
 const logger = require('winston');
 const express = require('express');
+const mongoose = require('mongoose');
 
 const authenticate = require('../middleware/authenticate');
 const authorize = require('../middleware/authorize');
@@ -49,6 +50,9 @@ genreRouter.get('/:id', async (req, res) => {
     let genreId = req.params.id;
     logger.info(`Request received to get genre for Id: ${genreId}`);
 
+    if (!mongoose.Types.ObjectId.isValid(genreId))
+        return next({ statusCode: 400 });
+
     try {
         let result = await genreService.getGenreById(genreId);
 
@@ -66,9 +70,12 @@ genreRouter.put('/:id', authenticate, async (req, res, next) => {
     let genreId = req.params.id;
     logger.info(`Request received to update genre for Id: ${genreId} - ${JSON.stringify(req.body)}`);
 
+    if (!mongoose.Types.ObjectId.isValid(genreId))
+        return next({ statusCode: 400 });
+
     let { error } = validate(req.body);
     if (error)
-        return next({ statusCode: 404, msg: `No Genres found for Id: ${genreId}` });
+        return next({ statusCode: 400 });
 
     try {
         let result = await genreService.updateGenre(genreId, req.body, req.user);
@@ -87,6 +94,9 @@ genreRouter.put('/:id', authenticate, async (req, res, next) => {
 genreRouter.delete('/:id', [authenticate, authorize], async (req, res) => {
     let genreId = req.params.id;
     logger.info(`Request received to delete genre for Id: ${genreId}`);
+
+    if (!mongoose.Types.ObjectId.isValid(genreId))
+        return next({ statusCode: 400 });
 
     try {
         let result = await genreService.deleteGenre(genreId);

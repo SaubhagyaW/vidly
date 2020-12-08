@@ -33,7 +33,7 @@ authRouter.post('/', async (req, res, next) => {
         };
         const token = jwt.sign(jwtPayload, config.get('PVT_KEY'));
         return res
-            .header('x-jwt-token', token)
+            .header('x-jwt-assertion', token)
             .status(200)
             .send('Successfully login.');
     } catch (err) {
