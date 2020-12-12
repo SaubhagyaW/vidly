@@ -1,6 +1,6 @@
-const Fawn = require('fawn');
+// const Fawn = require('fawn');
 
-const Constants = require('../util/constants');
+const { PAGE_SIZE, HIDDEN_FIELDS } = require('../util/constants');
 const { Rental } = require('../model/rental');
 
 // Repository to handle Rental data
@@ -9,16 +9,16 @@ class RentalRepository {
         try {
             // FIXME
             // Transaction
-            return await new Fawn.Task()
-                .save('rentals', rental)
-                // .update('movies', { _id: rental.movie.id }, {
-                //     $inc: {
-                //         numberInStock: -1
-                //     }
-                // })
-                .run();
+            // return await new Fawn.Task()
+            //     .save('rentals', rental)
+            //     // .update('movies', { _id: rental.movie.id }, {
+            //     //     $inc: {
+            //     //         numberInStock: -1
+            //     //     }
+            //     // })
+            //     .run();
 
-            // return rental;
+            return rental;
         } catch (err) {
             console.error('Error occurred while saving Rental data.', err);
             throw new Error('Error occurred while saving Rental data.', err);
@@ -29,10 +29,10 @@ class RentalRepository {
         try {
             return await Rental
                 .find()
-                .skip((pageNum - 1) * Constants.pageSize)
-                .limit(Constants.pageSize)
+                .skip((pageNum - 1) * PAGE_SIZE)
+                .limit(PAGE_SIZE)
                 .sort('-dateOut')
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Rental data.', err);
             throw new Error('Error occurred while retrieving Rental data.', err);
@@ -43,7 +43,7 @@ class RentalRepository {
         try {
             return await Rental
                 .findById(id)
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Rental for Id: ' + id, err);
             throw new Error('Error occurred while retrieving Rental for Id: ' + id, err);

@@ -1,10 +1,10 @@
 const logger = require('winston');
 
-const Constants = require('../util/constants');
+const { PAGE_SIZE, HIDDEN_FIELDS } = require('../util/constants');
 const { Genre } = require('../model/genre');
 
 // Repository to handle Genre data
-class GenreRepository {
+module.exports = class GenreRepository {
     async createGenre(genre) {
         try {
             return await genre.save();
@@ -18,10 +18,10 @@ class GenreRepository {
         try {
             return await Genre
                 .find()
-                .skip((pageNum - 1) * Constants.pageSize)
-                .limit(Constants.pageSize)
+                .skip((pageNum - 1) * PAGE_SIZE)
+                .limit(PAGE_SIZE)
                 .sort('name')
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             logger.error('Error occurred while retrieving Genre data.', err);
             throw new Error('Error occurred while retrieving Genre data.', err);
@@ -32,7 +32,7 @@ class GenreRepository {
         try {
             return await Genre
                 .findById(id)
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             logger.error('Error occurred while retrieving Genre for Id: ' + id, err);
             throw new Error('Error occurred while retrieving Genre for Id: ' + id, err);
@@ -63,6 +63,4 @@ class GenreRepository {
             throw new Error('Error occurred while deleting Genre for Id: ' + id, err);
         }
     }
-}
-
-module.exports = GenreRepository;
+};

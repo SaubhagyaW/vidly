@@ -6,8 +6,8 @@ const logger = require('winston');
 module.exports = function (err, req, res, next) {
     switch (err.statusCode) {
         case 400:
-            logger.error(`Invalid request payload - ${JSON.stringify(req.body)}`);
-            return res.status(400).send('Invalid request payload.');
+            logger.error(err.msg);
+            return res.status(400).send(err.msg);
         case 404:
             logger.error(err.msg);
             return res.status(404).send(err.msg);

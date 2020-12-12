@@ -1,4 +1,4 @@
-const Constants = require('../util/constants');
+const { PAGE_SIZE, HIDDEN_FIELDS } = require('../util/constants');
 const { Movie } = require('../model/movie');
 
 // Repository to handle Movie data
@@ -16,10 +16,10 @@ class MovieRepository {
         try {
             return await Movie
                 .find()
-                .skip((pageNum - 1) * Constants.pageSize)
-                .limit(Constants.pageSize)
+                .skip((pageNum - 1) * PAGE_SIZE)
+                .limit(PAGE_SIZE)
                 .sort('name')
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Movie data.', err);
             throw new Error('Error occurred while retrieving Movie data.', err);
@@ -30,7 +30,7 @@ class MovieRepository {
         try {
             return await Movie
                 .findById(id)
-                .select(Constants.hiddenFields);
+                .select(HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Movie for Id: ' + id, err);
             throw new Error('Error occurred while retrieving Movie for Id: ' + id, err);

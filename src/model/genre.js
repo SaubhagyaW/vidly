@@ -12,12 +12,12 @@ function validateGenre(body) {
 
 // DB validation schema for Genre
 const genreSchema_mongoose = new mongoose.Schema({
-    // FIXME: Make name immutable
     name: {
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 50
+        maxlength: 50,
+        immutable: true
     },
     createdBy: {
         type: String,

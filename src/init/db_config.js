@@ -1,6 +1,6 @@
 const config = require('config');
 const mongoose = require('mongoose');
-const Fawn = require('fawn');
+// const Fawn = require('fawn');
 
 const mongoDbUrl = `${config.get('database.MONGO_URL')}/${config.get('database.DB_NAME')}`
     || 'mongodb://localhost/vidly';
@@ -17,6 +17,6 @@ module.exports = function () {
     mongoose.set('runValidators', true);
     mongoose.set('returnOriginal', false);
 
-    // Initialize "Fawn" package to handle Transactions (i.e. Two phase commits in Mongo DB)
-    Fawn.init(mongoose);
+    // // Initialize "Fawn" package to handle Transactions (i.e. Two phase commits in Mongo DB)
+    // Fawn.init(mongoose);
 };

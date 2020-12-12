@@ -2,7 +2,7 @@ const _ = require('lodash');
 const logger = require('winston');
 const express = require('express');
 
-const { validate } = require('../model/genre');
+const { validate } = require('../model/user');
 const UserService = require('../service/user_service');
 
 const userService = new UserService();
@@ -14,8 +14,10 @@ userRouter.post('/', async (req, res, next) => {
     logger.info(`Request received to create user - ${JSON.stringify(req.body)}`);
 
     let { error } = validate(req.body);
-    if (error)
-        return next({ statusCode: 400 });
+    if (error) {
+        logger.error(`Invalid request payload - ${JSON.stringify(req.body)}`);
+        return next({ statusCode: 400, err: { msg: `Invalid request payload - ${JSON.stringify(req.body)}` } });
+    }
 
     try {
         let result = await userService.createUser(req.body);
@@ -23,7 +25,7 @@ userRouter.post('/', async (req, res, next) => {
 
         res.send(_.pick(result, ['_id', 'name', 'email']));
     } catch (err) {
-        return next({ statusCode: 500, ex: err });
+        return next({ statusCode: 500, err: err });
     }
 });
 

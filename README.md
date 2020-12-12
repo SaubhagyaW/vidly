@@ -15,7 +15,7 @@ Full fledged Node JS project for a Movie rental shop.
     - Model relationships between connected data (Movie, Rental).
     - Two phase commits (Transactions) implemented in create rentals (Using Fawn module).
 2. REST framework -> Express
-    - API level validations (Using Joi module).
+    - API level validations (Using Joi module) - Validation middleware boilerplate is implemented.
     - Error handling middleware implemented.
 3. Lodash module is used - A library build on top of "underscore" module, which provides utility functions for common programming tasks
 4. Logging and error handling implemented for Genres.
@@ -39,12 +39,14 @@ Full fledged Node JS project for a Movie rental shop.
 3. Resolve npm vulnerability warnings.
 4. Define the global constants correctly. 
 5. Make Genre "name" immutable.
+
 6. Make Two phase commit work.
 7. Add proper log format, colors and file rotation configs.
 8. Configure env variables correctly.
-9. Dockerize
-10. Implement trace Id. (Check modules -> helmet, morgan)
-11. /returns API
+9. Write tests
+10. Dockerize
+11. Implement trace Id. (Check modules -> helmet, morgan)
+12. /returns API
 
 GitHub link: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
 

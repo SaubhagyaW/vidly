@@ -2,13 +2,13 @@ const request = require('supertest');
 // const jwt = require('jsonwebtoken');
 
 // const config = require('config');
-const { Genre } = require('../../app/model/genre');
+const { Genre } = require('../../model/genre');
 
 let server;
 
 describe('/api/genres', () => {
     beforeEach(() => {
-        server = require('../../app/index');
+        server = require('../../index');
     });
 
     afterEach(async () => {

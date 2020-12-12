@@ -45,7 +45,7 @@ const userSchema_mongoose = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6,
+        // minlength: 6,
         maxlength: 1024
     },
     isAdmin: {
