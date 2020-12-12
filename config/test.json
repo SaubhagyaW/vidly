@@ -6,5 +6,6 @@
         "MONGO_URL": "mongodb://localhost",
         "DB_NAME": "vidly_test"
     },
-    "PVT_KEY": "JWT Signature"
+    "PVT_KEY": "JWT Signature",
+    "JWT_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmQ0ODhmMWMxNmRmNjE5M2YwYWQzOWQiLCJpc0FkbWluIjp0cnVlLCJuYW1lIjoiU2F1YmkiLCJlbWFpbCI6InNhdWJpQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2In0.lDQU3nVEo8NVO6hfheFZfslFTkyTlq0JSVIGp7GE7Io"
 }

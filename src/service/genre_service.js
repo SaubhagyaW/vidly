@@ -1,3 +1,4 @@
+const logger = require('winston');
 const _ = require('lodash');
 
 const { Genre } = require('../model/genre');
@@ -40,6 +41,12 @@ module.exports = class GenreService {
 
     async updateGenre(id, payload, user) {
         try {
+            let genre = await this.genreRepository.getGenreById(id);
+            if (payload.name !== genre.name) {
+                logger.error('Genre.name field cannot be updated');
+                throw new Error('Genre.name field cannot be updated');
+            }
+
             payload.updatedBy = await this.userRepository.getUserIdByEmail(user.email);
             return await this.genreRepository.updateGenre(id, payload);
         } catch (err) {

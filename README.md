@@ -30,23 +30,18 @@ Full fledged Node JS project for a Movie rental shop.
 6. Cross cutting feature implemented (Trace Id).
 7. Env variables configured (Using config module).
 8. TDD (Unit/Integration testing)
+    - Unit tests written for Genres Service.
+    - Integration tests written to cover Genres API.
 9. Deployment
     - Helmet and compression modules are used to handle security and improve performance in Production.
 
 ## TODO
-1. Upgrade to latest ES version (ES10).
-2. Review Controller-Service-Repository pattern.
-3. Resolve npm vulnerability warnings.
-4. Define the global constants correctly. 
-5. Make Genre "name" immutable.
-
-6. Make Two phase commit work.
-7. Add proper log format, colors and file rotation configs.
-8. Configure env variables correctly.
-9. Write tests
-10. Dockerize
-11. Implement trace Id. (Check modules -> helmet, morgan)
-12. /returns API
+1. Make Two phase commit work (Fawn).
+2. Add proper log format, colors and file rotation configs.
+3. Configure env variables correctly.
+4. Dockerize
+5. Implement trace Id. (Check modules -> helmet, morgan)
+6. /returns API
 
 GitHub link: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
 

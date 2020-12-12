@@ -12,8 +12,8 @@ module.exports = function (err, req, res, next) {
             logger.error(err.msg);
             return res.status(404).send(err.msg);
         case 500:
-            logger.error(`Error occurred in server.`, err.ex);
-            return res.status(500).send(err.msg);
+            logger.error(`Error occurred in server.`, err.err.ex);
+            return res.status(500).send(err.err.message);
         default:
             logger.error(`Error occurred in Error middleware.`);
             return res.send();
