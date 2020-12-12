@@ -15,28 +15,36 @@ Full fledged Node JS project for a Movie rental shop.
     - Model relationships between connected data (Movie, Rental).
     - Two phase commits (Transactions) implemented in create rentals (Using Fawn module).
 2. REST framework -> Express
-    - API level validations (Using Joi module).
-3. Logging and error handling implemented for Genres.
-4. Authentication and authorization layer implemented for Genres.
-5. Cross cutting feature implemented (Trace Id).
-6. Env variables configured (Using config module).
-7. TDD (Unit/Integration testing)
-8. Deployment
-
-## FIX-ME
-1. Upgrade to latest ES version (ES10).
-2. Resolve npm vulnerability warnings.
-3. Define the global constants correctly.
-4. Make Genre "name" immutable.
-5. Make Two phase commit work.
+    - API level validations (Using Joi module) - Validation middleware boilerplate is implemented.
+    - Error handling middleware implemented.
+3. Lodash module is used - A library build on top of "underscore" module, which provides utility functions for common programming tasks
+4. Logging and error handling implemented for Genres.
+    - Winston module is used.
+    - Log levels/format/colors configured.
+    - Log output is written to console and files (File rotation configured).
+5. Authentication and authorization layer implemented for Genres.
+    - A user must have admin permissions to delete a genre.
+    - JWT is used.
+    - Password validation based on a criteria (Using Joi-password-complexity module).
+    - Password hashing when saving to the DB (Using bcrypt module).
+6. Cross cutting feature implemented (Trace Id).
+7. Env variables configured (Using config module).
+8. TDD (Unit/Integration testing)
+    - Unit tests written for Genres Service.
+    - Integration tests written to cover Genres API.
+    - Unit tests written for Authentication middleware.
+9. Deployment
+    - Helmet and compression modules are used to handle security and improve performance in Production.
 
 ## TODO
-1. Logging and error handling. (Use template strings)
-2. Implement authentication and authorization layer.
-3. Unit testing/Integration testing/TDD
-4. Deployment
+1. Make Two phase commit work (Fawn).
+2. Add proper log format, colors and file rotation configs.
+3. Configure env variables correctly.
+4. Dockerize
 5. Implement trace Id. (Check modules -> helmet, morgan)
-6. Configure env variables correctly.
+6. /returns API
+
+GitHub link: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
 
 ## API Specification
 
