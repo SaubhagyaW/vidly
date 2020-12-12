@@ -1,4 +1,4 @@
-const GenreService = require('../../src/service/genre_service');
+const GenreService = require('../../../src/service/genre_service');
 
 const genreService = new GenreService();
 
@@ -7,15 +7,10 @@ describe('Genres Service Layer', () => {
         jest.fn().mockClear();
 
         // Mock Test user
-        jest.mock('../../src/repository/user_repository', () => {
+        jest.mock('../../../src/repository/user_repository', () => {
             return jest.fn().mockImplementation(() => {
                 return {
-                    getUserIdByEmail: jest.fn().mockReturnValue({
-                        name: 'Saubi',
-                        email: 'saubi@gmail.com',
-                        password: '123456',
-                        isAdmin: true
-                    })
+                    getUserIdByEmail: jest.fn().mockReturnValue('5fd488f1c16df6193f0ad39d')
                 };
             });
         });
@@ -23,7 +18,7 @@ describe('Genres Service Layer', () => {
 
     describe('Update Genre', () => {
         it('Update Genre - Update name field.', async () => {
-            jest.mock('../../src/repository/genre_repository', () => {
+            jest.mock('../../../src/repository/genre_repository', () => {
                 return jest.fn().mockImplementation(() => {
                     return {
                         getGenreById: jest.fn().mockReturnValue({

@@ -1,13 +1,14 @@
 const express = require('express');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
-const config = require('config');
-const { User } = require('../model/user');
+const generateAuthToken = require('../util/jwt_util');
+const UserRepository = require('../repository/user_repository');
 
 // Router to handle User Login
 const authRouter = express.Router();
+
+let userRepository = new UserRepository();
 
 authRouter.post('/', async (req, res, next) => {
     logger.info(`Login request received for email: ${JSON.stringify(req.body.email)}`);
@@ -17,7 +18,7 @@ authRouter.post('/', async (req, res, next) => {
         return res.status(400).send('Invalid email or password!');
 
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await userRepository.getUserIdByEmail(req.body.email);
         if (!user)
             return res.status(400).send('Invalid email or password!');
 
@@ -25,15 +26,9 @@ authRouter.post('/', async (req, res, next) => {
         if (!validPwd)
             return res.status(400).send('Invalid email or password!');
 
-        const jwtPayload = {
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin
-        };
-        const token = jwt.sign(jwtPayload, config.get('PVT_KEY'));
+        const jwtToken = generateAuthToken(user);
         return res
-            .header('x-jwt-assertion', token)
+            .header('x-jwt-assertion', jwtToken)
             .status(200)
             .send('Successfully login.');
     } catch (err) {

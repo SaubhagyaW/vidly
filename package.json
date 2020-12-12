@@ -4,7 +4,7 @@
   "description": "Sample Node JS app - Vidly",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest --testEnvironment=node --forceExit --verbose --coverage --detectOpenHandles"
+    "test": "jest --testEnvironment=node --forceExit --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",

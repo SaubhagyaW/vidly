@@ -32,6 +32,7 @@ Full fledged Node JS project for a Movie rental shop.
 8. TDD (Unit/Integration testing)
     - Unit tests written for Genres Service.
     - Integration tests written to cover Genres API.
+    - Unit tests written for Authentication middleware.
 9. Deployment
     - Helmet and compression modules are used to handle security and improve performance in Production.
 
