@@ -14,10 +14,8 @@ userRouter.post('/', async (req, res, next) => {
     logger.info(`Request received to create user - ${JSON.stringify(req.body)}`);
 
     let { error } = validate(req.body);
-    if (error) {
-        logger.error(`Invalid request payload - ${JSON.stringify(req.body)}`);
+    if (error) 
         return next({ statusCode: 400, err: { msg: `Invalid request payload - ${JSON.stringify(req.body)}` } });
-    }
 
     try {
         let result = await userService.createUser(req.body);

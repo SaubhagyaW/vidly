@@ -16,10 +16,8 @@ genreRouter.post('/', authenticate, async (req, res, next) => {
     logger.info(`Request received to create genre - ${JSON.stringify(req.body)}`);
 
     let { error } = validate(req.body);
-    if (error) {
-        logger.error(`Invalid request payload - ${JSON.stringify(req.body)}`);
+    if (error)
         return next({ statusCode: 400, err: { msg: `Invalid request payload - ${JSON.stringify(req.body)}` } });
-    }
     
     try {
         let result = await genreService.createGenre(req.body, req.user);
@@ -53,10 +51,8 @@ genreRouter.get('/:id', authenticate, async (req, res) => {
     let genreId = req.params.id;
     logger.info(`Request received to get genres for Id: ${genreId}`);
 
-    if (!mongoose.Types.ObjectId.isValid(genreId)) {
-        logger.error(`Invalid path parameter - ${genreId}`);
+    if (!mongoose.Types.ObjectId.isValid(genreId))
         return next({ statusCode: 400, err: { msg: `Invalid path parameter - ${genreId}` } });
-    }
 
     try {
         let result = await genreService.getGenreById(genreId);
@@ -75,16 +71,12 @@ genreRouter.put('/:id', authenticate, async (req, res, next) => {
     let genreId = req.params.id;
     logger.info(`Request received to update genre for Id: ${genreId} - ${JSON.stringify(req.body)}`);
 
-    if (!mongoose.Types.ObjectId.isValid(genreId)) {
-        logger.error(`Invalid path parameter - ${genreId}`);
+    if (!mongoose.Types.ObjectId.isValid(genreId))
         return next({ statusCode: 400, err: { msg: `Invalid path parameter - ${genreId}` } });
-    }
 
     let { error } = validate(req.body);
-    if (error) {
-        logger.error(`Invalid request payload - ${JSON.stringify(req.body)}`);
+    if (error)
         return next({ statusCode: 400, err: { msg: `Invalid request payload - ${JSON.stringify(req.body)}` } });
-    }
 
     try {
         let result = await genreService.updateGenre(genreId, req.body, req.user);
@@ -104,10 +96,8 @@ genreRouter.delete('/:id', [authenticate, authorize], async (req, res) => {
     let genreId = req.params.id;
     logger.info(`Request received to delete genre for Id: ${genreId}`);
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        logger.error(`Invalid path parameter - ${genreId}`);
+    if (!mongoose.Types.ObjectId.isValid(id))
         return next({ statusCode: 400, err: { msg: `Invalid path parameter - ${genreId}` } });
-    }
 
     try {
         let result = await genreService.deleteGenre(genreId);
