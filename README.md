@@ -17,7 +17,9 @@ Full fledged Node JS project for a Movie rental shop.
 2. REST framework -> Express
     - API level validations (Using Joi module) - Validation middleware boilerplate is implemented.
     - Error handling middleware implemented.
-    - `CORS enabled (Using cors module).`
+    ```diff
+    - CORS enabled (Using cors module).
+    ```
 3. Lodash module is used - A library build on top of "underscore" module, which provides utility functions for common programming tasks
 4. Logging and error handling implemented for Genres.
     - Winston module is used.
