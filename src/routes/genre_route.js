@@ -39,7 +39,6 @@ genreRouter.get('/', authenticate, async (req, res, next) => {
         if (!result)
             return next({ statusCode: 404, msg: 'No Genres found.' });
 
-
         logger.info(`Get all Genres - ${JSON.stringify(result)}`);
         res.send(result);
     } catch (err) {
