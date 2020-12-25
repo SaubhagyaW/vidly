@@ -40,15 +40,21 @@ Full fledged Node JS project for a Movie rental shop.
     - Helmet and compression modules are used to handle security and improve performance in Production.
 
 ## TODO
-1. Make Two phase commit work (Fawn).
-2. Add proper log format, colors and file rotation configs.
-3. Configure env variables correctly.
-4. Dockerize
-5. Implement trace Id. (Check modules -> helmet, morgan)
-6. /returns API
-7. Add ES6 export/import to Vidly BE
+1. Properly document API spec.
+    - Edit/Delete Genre
+    - /returns API
+    - User profile and access rights
+    - Error codes
+        - User already registered
+        - Login failed
+2. Implement APIs accordingly and Error handling.
+3. Make Two phase commit work (Fawn).
+4. Add proper log format, colors and file rotation configs.
+5. Configure env variables correctly.
+6. Dockerize
+7. Implement trace Id. (Check modules -> helmet, morgan)
 
-GitHub link: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
+GitHub link to the Tutorial Project: https://github.com/mosh-hamedani/vidly-api-node/tree/master/routes
 
 ## API Specification
 
