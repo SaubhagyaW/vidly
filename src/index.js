@@ -2,19 +2,22 @@ const config = require('config');
 const express = require('express');
 const cors = require('cors');
 
+const Constants = require('./util/constants');
+
 // Configurations
 require('./init/logger')();
 require('./init/db_config')();
 require('./init/validation')();
-
-// throw new Error('Bla bla');
 
 // Express configs
 const app = express();
 app.use(express.json());
 
 // Enable CORS
-app.use(cors());
+var corsOptions = {
+  exposedHeaders: Constants.AUTH_HEADER
+};
+app.use(cors(corsOptions));
 
 require('./init/routes')(app);
 

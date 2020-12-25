@@ -1,6 +1,5 @@
 // const Fawn = require('fawn');
-
-const { PAGE_SIZE, HIDDEN_FIELDS } = require('../util/constants');
+const Constants = require('../util/constants');
 const { Rental } = require('../model/rental');
 
 // Repository to handle Rental data
@@ -29,10 +28,10 @@ class RentalRepository {
         try {
             return await Rental
                 .find()
-                .skip((pageNum - 1) * PAGE_SIZE)
-                .limit(PAGE_SIZE)
+                .skip((pageNum - 1) * Constants.PAGE_SIZE)
+                .limit(Constants.PAGE_SIZE)
                 .sort('-dateOut')
-                .select(HIDDEN_FIELDS);
+                .select(Constants.HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Rental data.', err);
             throw new Error('Error occurred while retrieving Rental data.', err);
@@ -43,7 +42,7 @@ class RentalRepository {
         try {
             return await Rental
                 .findById(id)
-                .select(HIDDEN_FIELDS);
+                .select(Constants.HIDDEN_FIELDS);
         } catch (err) {
             console.error('Error occurred while retrieving Rental for Id: ' + id, err);
             throw new Error('Error occurred while retrieving Rental for Id: ' + id, err);

@@ -19,7 +19,7 @@ module.exports = function (app) {
     app.use('/api/customers', customerRouter);
     app.use('/api/rentals', rentalRouter);
     app.use('/api/users', userRouter);
-    app.use('/login', authRouter);
+    app.use('/auth', authRouter);
 
     // Error handling middleware
     // NOTE: Use of middleware handlers slow down the request processing performance.
