@@ -45,8 +45,8 @@ Full fledged Node JS project for a Movie rental shop.
     - /returns API
     - User profile and access rights
     - Error codes
-        - User already registered
-        - Login failed
+        - User already registered - HTTP 400
+        - Login failed - HTTP 400
 2. Implement APIs accordingly and Error handling.
 3. Make Two phase commit work (Fawn).
 4. Add proper log format, colors and file rotation configs.
