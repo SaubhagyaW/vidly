@@ -1,0 +1,572 @@
+swagger: "2.0"
+info:
+  description: "Application for a Movie Rental Shop."
+  version: "1.0.0"
+  title: "Vidly"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "saubhagya03@gmail.com"
+basePath: "/api"
+tags:
+  - name: "genres"
+    description: "Read/Create/Edit/Delete Genres"
+  - name: "movies"
+    description: "Read/Create/Edit/Delete Movies"
+  - name: "rentals"
+    description: "Handle movie Rentals"
+  - name: "customers"
+    description: "Handle Customers"
+  - name: "users"
+    description: "Handle Users"
+schemes:
+  - "http"
+  - "https"
+paths:
+  /genres:
+    post:
+      tags:
+        - "genres"
+      summary: "Create Genre"
+      description: "Create Genre"
+      operationId: "addGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "Genre object that needs to be added to the DB"
+          required: true
+          schema:
+            $ref: "#/definitions/Genre"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GenreResponse"
+        "400":
+          description: "Invalid input"
+    get:
+      tags:
+        - "genres"
+      summary: "Get all Genres"
+      description: "Get all Genres"
+      operationId: "getAllGenres"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GenreResponse"
+  /genres/{genreId}:
+    get:
+      tags:
+        - "genres"
+      summary: "Get a Genre by ID"
+      description: "Get a Genre by ID"
+      operationId: "getGenreById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GenreResponse"
+        "404":
+          description: "Record not found"
+    put:
+      tags:
+        - "genres"
+      summary: "Edit a Genre"
+      description: "Edit a Genre"
+      operationId: "updateGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated Genre"
+          required: true
+          schema:
+            $ref: "#/definitions/Genre"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GenreResponse"
+        "400":
+          description: "Invalid input"
+        "404":
+          description: "Record not found"
+    delete:
+      tags:
+        - "genres"
+      summary: "Delete a Genre"
+      description: "Delete a Genre"
+      operationId: "deleteGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+        "404":
+          description: "Record not found"
+  /movies:
+    post:
+      tags:
+        - "movies"
+      summary: "Create Movie"
+      description: "Create Movie"
+      operationId: "addMovie"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "Movie object that needs to be added to the DB"
+          required: true
+          schema:
+            $ref: "#/definitions/Movie"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/MovieResponse"
+        "400":
+          description: "Invalid input"
+    get:
+      tags:
+        - "movies"
+      summary: "Get all Movies"
+      description: "Get all Movies"
+      operationId: "getAllMovies"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/MovieResponse"
+  /movies/{movieId}:
+    get:
+      tags:
+        - "movies"
+      summary: "Get a Movie by ID"
+      description: "Get a Movie by ID"
+      operationId: "getMovieById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "movieId"
+          in: "path"
+          description: "Movie ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/MovieResponse"
+        "404":
+          description: "Record not found"
+    put:
+      tags:
+        - "movies"
+      summary: "Edit a Movie"
+      description: "Edit a Movie"
+      operationId: "updateMovie"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "movieId"
+          in: "path"
+          description: "Movie ID"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated Movie"
+          required: true
+          schema:
+            $ref: "#/definitions/Movie"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/MovieResponse"
+        "400":
+          description: "Invalid input"
+        "404":
+          description: "Record not found"
+    delete:
+      tags:
+        - "movies"
+      summary: "Delete a Movie"
+      description: "Delete a Movie"
+      operationId: "deleteMovie"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "movieId"
+          in: "path"
+          description: "Movie ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+        "404":
+          description: "Record not found"
+  /rentals:
+    post:
+      tags:
+        - "rentals"
+      summary: "Create Rental"
+      description: "Create Rental"
+      operationId: "addRental"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "New Rental"
+          required: true
+          schema:
+            $ref: "#/definitions/Rental"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RentalResponse"
+        "400":
+          description: "Invalid input"
+    get:
+      tags:
+        - "rentals"
+      summary: "Get all Rentals"
+      description: "Get all Rentals"
+      operationId: "getAllRentals"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RentalResponse"
+  /returns:
+    post:
+      tags:
+        - "rentals"
+      summary: "Update Rental with Return information"
+      description: "Update Rental with Return information"
+      operationId: "updateRentalWithReturn"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "Rental Return"
+          required: true
+          schema:
+            $ref: "#/definitions/Rental"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RentalResponse"
+        "400":
+          description: "Invalid input"
+  /customers:
+    post:
+      tags:
+        - "customers"
+      summary: "Create Customer"
+      description: "Create Customer"
+      operationId: "addCustomer"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "Add Customer"
+          required: true
+          schema:
+            $ref: "#/definitions/Customer"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/CustomerResponse"
+        "400":
+          description: "Invalid input"
+    get:
+      tags:
+        - "customers"
+      summary: "Get all Customers"
+      description: "Get all Customers"
+      operationId: "getAllCustomers"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CustomerResponse"
+  /users:
+    post:
+      tags:
+        - "users"
+      summary: "Create User"
+      description: "Create User"
+      operationId: "addUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be added to the DB"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/UserResponse"
+        "400":
+          description: "Invalid input"
+definitions:
+  Genre:
+    type: "object"
+    required:
+      - name
+    properties:
+      name:
+        type: "string"
+        example: "Thriller"
+  Movie:
+    type: "object"
+    required:
+      - title
+      - genreId
+      - numberInStock
+      - dailyRentalRate
+    properties:
+      title:
+        type: "string"
+        example: "Dia Hard"
+      genreId:
+        type: "string"
+        example: "5fd488f1c16df6193f0ad39d"
+      numberInStock:
+        type: "integer"
+        example: 10
+      dailyRentalRate:
+        type: "integer"
+        example: 7
+  Rental:
+    type: "object"
+    required:
+      - customerId
+      - movieId
+    properties:
+      customerId:
+        type: "string"
+        example: "5fd488f1c16df6193f0ad39d"
+      movieId:
+        type: "string"
+        example: "5fd488f1c16df6193f0ad39d"
+  Customer:
+    type: "object"
+    required:
+      - name
+      - phone
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe"
+      phone:
+        type: "string"
+        example: "0123456789"
+      isGold:
+        type: "boolean"
+        default: false
+  User:
+    type: "object"
+    required:
+      - name
+      - email
+      - password
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe"
+      email:
+        type: "string"
+        example: "jane@gmail.com"
+      password:
+        type: "string"
+        example: "123456"
+      admin:
+        type: "boolean"
+        default: false
+  BaseResponse:
+    allOf:
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"
+  GenreResponse:
+    allOf:
+      - $ref: '#/definitions/Genre'
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"
+  MovieResponse:
+    allOf:
+      - $ref: '#/definitions/Movie'
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"
+  RentalResponse:
+    allOf:
+      - $ref: '#/definitions/Rental'
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"
+  CustomerResponse:
+    allOf:
+      - $ref: '#/definitions/Customer'
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"
+  UserResponse:
+    allOf:
+      - $ref: '#/definitions/User'
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            example: "5fd488f1c16df6193f0ad39d"

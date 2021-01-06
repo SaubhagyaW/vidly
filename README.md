@@ -58,4 +58,4 @@ GitHub link to the Tutorial Project: https://github.com/mosh-hamedani/vidly-api-
 
 ## API Specification
 
-[View](./API_spec.md)
+[View](./api.yml)
