@@ -71,6 +71,93 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/GenreResponse"
+  /genres/{genreId}:
+    get:
+      tags:
+        - "genres"
+      summary: "Get a Genre by ID"
+      description: "Get a Genre by ID"
+      operationId: "getGenreById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GenreResponse"
+        "404":
+          description: "Record not found"
+    put:
+      tags:
+        - "genres"
+      summary: "Edit a Genre"
+      description: "Edit a Genre"
+      operationId: "updateGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated Genre"
+          required: true
+          schema:
+            $ref: "#/definitions/Genre"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/GenreResponse"
+        "400":
+          description: "Invalid input"
+        "404":
+          description: "Record not found"
+    delete:
+      tags:
+        - "genres"
+      summary: "Delete a Genre"
+      description: "Delete a Genre"
+      operationId: "deleteGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "genreId"
+          in: "path"
+          description: "Genre ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+        "404":
+          description: "Record not found"
   /movies:
     post:
       tags:
@@ -113,6 +200,18 @@ paths:
         - name: "x-jwt-assertion"
           type: "string"
           in: "header"
+        - name: "searchTitle"
+          type: "string"
+          in: "query"
+        - name: "sortField"
+          type: "string"
+          in: "query"
+        - name: "sortOrder"
+          type: "string"
+          in: "query"
+        - name: "pageNum"
+          type: "integer"
+          in: "query"
       responses:
         "200":
           description: "Successful operation"
@@ -249,6 +348,21 @@ paths:
         - name: "x-jwt-assertion"
           type: "string"
           in: "header"
+        - name: "fromDate"
+          type: "string"
+          in: "query"
+        - name: "toDate"
+          type: "string"
+          in: "query"
+        - name: "customerId"
+          type: "string"
+          in: "query"
+        - name: "sortRentalFee"
+          type: "string"
+          in: "query"
+        - name: "pageNum"
+          type: "integer"
+          in: "query"
       responses:
         "200":
           description: "Successful operation"
@@ -326,6 +440,18 @@ paths:
         - name: "x-jwt-assertion"
           type: "string"
           in: "header"
+        - name: "searchName"
+          type: "string"
+          in: "query"
+        - name: "sortField"
+          type: "string"
+          in: "query"
+        - name: "sortOrder"
+          type: "string"
+          in: "query"
+        - name: "pageNum"
+          type: "integer"
+          in: "query"
       responses:
         "200":
           description: "Successful operation"
