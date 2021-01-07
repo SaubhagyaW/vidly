@@ -71,93 +71,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/GenreResponse"
-  /genres/{genreId}:
-    get:
-      tags:
-        - "genres"
-      summary: "Get a Genre by ID"
-      description: "Get a Genre by ID"
-      operationId: "getGenreById"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "x-jwt-assertion"
-          type: "string"
-          in: "header"
-        - name: "genreId"
-          in: "path"
-          description: "Genre ID"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "Successful operation"
-          schema:
-            $ref: "#/definitions/GenreResponse"
-        "404":
-          description: "Record not found"
-    put:
-      tags:
-        - "genres"
-      summary: "Edit a Genre"
-      description: "Edit a Genre"
-      operationId: "updateGenre"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "x-jwt-assertion"
-          type: "string"
-          in: "header"
-        - name: "genreId"
-          in: "path"
-          description: "Genre ID"
-          required: true
-          type: "string"
-        - in: "body"
-          name: "body"
-          description: "Updated Genre"
-          required: true
-          schema:
-            $ref: "#/definitions/Genre"
-      responses:
-        "200":
-          description: "Successful operation"
-          schema:
-            $ref: "#/definitions/GenreResponse"
-        "400":
-          description: "Invalid input"
-        "404":
-          description: "Record not found"
-    delete:
-      tags:
-        - "genres"
-      summary: "Delete a Genre"
-      description: "Delete a Genre"
-      operationId: "deleteGenre"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "x-jwt-assertion"
-          type: "string"
-          in: "header"
-        - name: "genreId"
-          in: "path"
-          description: "Genre ID"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "Successful operation"
-          schema:
-            $ref: "#/definitions/BaseResponse"
-        "404":
-          description: "Record not found"
   /movies:
     post:
       tags:
@@ -487,6 +400,33 @@ paths:
             $ref: "#/definitions/UserResponse"
         "400":
           description: "Invalid input"
+  /users/{userId}:
+    get:
+      tags:
+        - "users"
+      summary: "Get a User by ID"
+      description: "Get a User by ID"
+      operationId: "getUserById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "x-jwt-assertion"
+          type: "string"
+          in: "header"
+        - name: "userId"
+          in: "path"
+          description: "User ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/UserResponse"
+        "404":
+          description: "Record not found"
 definitions:
   Genre:
     type: "object"
