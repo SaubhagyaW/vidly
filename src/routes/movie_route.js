@@ -1,5 +1,10 @@
+const logger = require('winston');
+const _ = require('lodash');
 const express = require('express');
+const mongoose = require('mongoose');
 
+const authenticate = require('../middleware/authenticate');
+const authorize = require('../middleware/authorize');
 const { validate } = require('../model/movie');
 const MovieService = require('../service/movie_service');
 
@@ -8,81 +13,137 @@ const movieService = new MovieService();
 // Router to handle Movie requests
 const movieRouter = express.Router();
 
-movieRouter.post('/', async (req, res) => {
-    let { error } = validate(req.body);
-    if (error)
-        return res.status(400).send('Invalid request payload.');
+movieRouter.post('/', authenticate, async (req, res, next) => {
+  logger.info(`Request received to create Movie - ${JSON.stringify(req.body)}`);
 
-    try {
-        let result = await movieService.createMovie(req.body);
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+  let { error } = validate(req.body);
+  if (error)
+    return next({
+      statusCode: 400,
+      msg: `Invalid request payload - ${JSON.stringify(req.body)}`
+    });
+
+  try {
+    let result = await movieService.createMovie(req.body, req.user);
+    logger.info(`Movie created - ${JSON.stringify(result)}`);
+
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
-movieRouter.get('/', async (req, res) => {
-    let pageNum = req.query.pageNum || 1;
+movieRouter.get('/', authenticate, async (req, res, next) => {
+  logger.info('Request received to get all Movies');
 
-    try {
-        let result = await movieService.getMovies(pageNum);
+  const searchTitle = req.query.searchTitle;
+  const sortField = req.query.sortField;
+  const sortOrder = req.query.sortOrder;
+  const pageNum = req.query.pageNum;
 
-        if (!result)
-            return res.status(404).send('No Movie found.');
+  try {
+    let result = await movieService.getMovies(
+      searchTitle,
+      sortField,
+      sortOrder,
+      pageNum
+    );
 
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+    logger.info(`Get all Movies - ${JSON.stringify(result)}`);
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
-movieRouter.get('/:id', async (req, res) => {
-    let movieId = req.params.id;
+movieRouter.get('/:id', authenticate, async (req, res, next) => {
+  let movieId = req.params.id;
+  logger.info(`Request received to get Movie for Id: ${movieId}`);
 
-    try {
-        let result = await movieService.getMovieById(movieId);
+  if (!mongoose.Types.ObjectId.isValid(movieId))
+    return next({
+      statusCode: 400,
+      msg: `Invalid path parameter - ${movieId}`
+    });
 
-        if (!result)
-            return res.status(404).send('No Movie found for Id: ' + movieId);
+  try {
+    let result = await movieService.getMovieById(movieId);
 
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+    if (!result)
+      return next({
+        statusCode: 404,
+        msg: `No Movies found for Id: ${movieId}`
+      });
+
+    logger.info(`Get Movie - ${JSON.stringify(result)}`);
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
-movieRouter.put('/:id', async (req, res) => {
-    let movieId = req.params.id;
+movieRouter.put('/:id', authenticate, async (req, res, next) => {
+  let movieId = req.params.id;
+  logger.info(
+    `Request received to update Movie for Id: ${movieId} - ${JSON.stringify(
+      req.body
+    )}`
+  );
 
-    let { error } = validate(req.body);
-    if (error)
-        return res.status(400).send('Invalid request payload.');
+  if (!mongoose.Types.ObjectId.isValid(movieId))
+    return next({
+      statusCode: 400,
+      msg: `Invalid path parameter - ${movieId}`
+    });
 
-    try {
-        let result = await movieService.updateMovie(movieId, req.body);
+  let { error } = validate(req.body);
+  if (error)
+    return next({
+      statusCode: 400,
+      msg: `Invalid request payload - ${JSON.stringify(req.body)}`
+    });
 
-        if (!result)
-            return res.status(404).send('No Movie found for Id: ' + movieId);
+  try {
+    let result = await movieService.updateMovie(movieId, req.body, req.user);
 
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+    if (!result)
+      return next({
+        statusCode: 404,
+        msg: `No Movie found for Id: ${movieId}`
+      });
+
+    logger.info(`Movie updated - ${JSON.stringify(result)}`);
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
-movieRouter.delete('/:id', async (req, res) => {
-    let movieId = req.params.id;
+// User must have admin permissions to delete a Movie.
+movieRouter.delete('/:id', [authenticate, authorize], async (req, res, next) => {
+  let movieId = req.params.id;
+  logger.info(`Request received to delete Movie for Id: ${movieId}`);
 
-    try {
-        let result = await movieService.deleteMovie(movieId);
+  if (!mongoose.Types.ObjectId.isValid(movieId))
+    return next({
+      statusCode: 400,
+      msg: `Invalid path parameter - ${movieId}`
+    });
 
-        if (!result)
-            return res.status(404).send('No Movie found for Id: ' + movieId);
+  try {
+    let result = await movieService.deleteMovie(movieId);
 
-        res.send();
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+    if (!result)
+      return next({
+        statusCode: 404,
+        msg: `No Movie found for Id: ${movieId}`
+      });
+
+    logger.info(`Genre deleted for Id: ${result._id}`);
+    res.send(_.pick(result, ['_id']));
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
 module.exports = movieRouter;

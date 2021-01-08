@@ -14,11 +14,9 @@ module.exports = class GenreRepository {
     }
   }
 
-  async getGenres(pageNum) {
+  async getGenres() {
     try {
       return await Genre.find()
-        .skip((pageNum - 1) * Constants.PAGE_SIZE)
-        .limit(Constants.PAGE_SIZE)
         .sort('name')
         .select(Constants.HIDDEN_FIELDS);
     } catch (err) {
@@ -39,28 +37,28 @@ module.exports = class GenreRepository {
     }
   }
 
-  async updateGenre(id, payload) {
-    try {
-      return await Genre.findByIdAndUpdate(id, {
-        $set: {
-          name: payload.name
-        },
-        $currentDate: {
-          updatedAt: 1
-        }
-      });
-    } catch (err) {
-      logger.error('Error occurred while updating Genre for Id: ' + id, err);
-      throw new Error('Error occurred while updating Genre for Id: ' + id, err);
-    }
-  }
+  // async updateGenre(id, payload) {
+  //   try {
+  //     return await Genre.findByIdAndUpdate(id, {
+  //       $set: {
+  //         name: payload.name
+  //       },
+  //       $currentDate: {
+  //         updatedAt: 1
+  //       }
+  //     });
+  //   } catch (err) {
+  //     logger.error('Error occurred while updating Genre for Id: ' + id, err);
+  //     throw new Error('Error occurred while updating Genre for Id: ' + id, err);
+  //   }
+  // }
 
-  async deleteGenre(id) {
-    try {
-      return await Genre.findByIdAndRemove(id);
-    } catch (err) {
-      logger.error('Error occurred while deleting Genre for Id: ' + id, err);
-      throw new Error('Error occurred while deleting Genre for Id: ' + id, err);
-    }
-  }
+  // async deleteGenre(id) {
+  //   try {
+  //     return await Genre.findByIdAndRemove(id);
+  //   } catch (err) {
+  //     logger.error('Error occurred while deleting Genre for Id: ' + id, err);
+  //     throw new Error('Error occurred while deleting Genre for Id: ' + id, err);
+  //   }
+  // }
 };

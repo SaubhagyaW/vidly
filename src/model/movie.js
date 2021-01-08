@@ -80,6 +80,18 @@ const movieSchema_mongoose = new mongoose.Schema({
         min: 0,
         max: 255
     },
+    createdBy: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    },
+    updatedBy: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    },
     updatedAt: {
         type: Date,
         default: Date.now

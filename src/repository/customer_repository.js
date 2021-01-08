@@ -1,3 +1,5 @@
+const logger = require('winston');
+
 const Constants = require('../util/constants');
 const { Customer } = require('../model/customer');
 
@@ -5,22 +7,40 @@ const { Customer } = require('../model/customer');
 class CustomerRepository {
   async createCustomer(customer) {
     try {
-      return customer.save();
+      return await customer.save();
     } catch (err) {
-      console.error('Error occurred while saving Customer data.', err);
+      logger.error('Error occurred while saving Customer data.', err);
       throw new Error('Error occurred while saving Customer data.', err);
     }
   }
 
-  async getCustomers(pageNum) {
+  async getCustomers(searchName, sortField, sortOrder, pageNum) {
+    // Default sort by First Name
+    if (!sortField || !sortOrder) {
+      sortField = 'fName'
+      sortOrder = 1
+    }
+    let sortObj = {};
+    sortObj[sortField] = sortOrder
+
+    if (!pageNum)
+      pageNum = 1
+
     try {
-      return await Customer.find()
-        .skip((pageNum - 1) * Constants.PAGE_SIZE)
-        .limit(Constants.PAGE_SIZE)
-        .sort('name')
-        .select(Constants.HIDDEN_FIELDS);
+      if (!searchName)
+        return await Customer.find()
+          .sort(sortObj)
+          .skip((pageNum - 1) * Constants.PAGE_SIZE)
+          .limit(Constants.PAGE_SIZE)
+          .select(Constants.HIDDEN_FIELDS);
+      else
+        return await Customer.find({ $or: [{ 'fName': `/${searchName}/` }, { 'lName': `/${searchName}/` }] })
+          .sort(sortObj)
+          .skip((pageNum - 1) * Constants.PAGE_SIZE)
+          .limit(Constants.PAGE_SIZE)
+          .select(Constants.HIDDEN_FIELDS);
     } catch (err) {
-      console.error('Error occurred while retrieving Customer data.', err);
+      logger.error('Error occurred while retrieving Customer data.', err);
       throw new Error('Error occurred while retrieving Customer data.', err);
     }
   }
@@ -29,7 +49,7 @@ class CustomerRepository {
     try {
       return await Customer.findById(id).select(Constants.HIDDEN_FIELDS);
     } catch (err) {
-      console.error(
+      logger.error(
         'Error occurred while retrieving Customer for Id: ' + id,
         err
       );
@@ -44,7 +64,8 @@ class CustomerRepository {
     try {
       return await Customer.findByIdAndUpdate(id, {
         $set: {
-          name: payload.name,
+          fName: payload.fName,
+          lName: payload.lName,
           phone: payload.phone,
           isGold: payload.isGold
         },
@@ -53,10 +74,7 @@ class CustomerRepository {
         }
       });
     } catch (err) {
-      console.error(
-        'Error occurred while updating Customer for Id: ' + id,
-        err
-      );
+      logger.error('Error occurred while updating Customer for Id: ' + id, err);
       throw new Error(
         'Error occurred while updating Customer for Id: ' + id,
         err
@@ -68,10 +86,7 @@ class CustomerRepository {
     try {
       return await Customer.findByIdAndRemove(id);
     } catch (err) {
-      console.error(
-        'Error occurred while deleting Customer for Id: ' + id,
-        err
-      );
+      logger.error('Error occurred while deleting Customer for Id: ' + id, err);
       throw new Error(
         'Error occurred while deleting Customer for Id: ' + id,
         err

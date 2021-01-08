@@ -1,68 +1,87 @@
 const { Movie } = require('../model/movie');
 const MovieRepository = require('../repository/movie_repository');
-const GenreRepository = require('../repository/genre_repository');
-
-const movieRepository = new MovieRepository();
-const genreRepository = new GenreRepository();
+// const GenreRepository = require('../repository/genre_repository');
+const UserRepository = require('../repository/user_repository');
 
 const _buildMovie = Symbol();
 
 // Service layer for Movie related operations
 class MovieService {
-    async createMovie(payload) {
-        try {
-            let genre = await genreRepository.getGenreById(payload.genreId);
+  constructor() {
+    this.movieRepository = new MovieRepository();
+    // this.genreRepository = new GenreRepository();
+    this.userRepository = new UserRepository();
+  }
 
-            let movie = this[_buildMovie](payload, genre);
-            return await movieRepository.createMovie(movie);
-        } catch (err) {
-            throw err;
-        }
-    }
+  async createMovie(payload, user) {
+    try {
+      let genre = await this.movieRepository.genreRepository.getGenreById(payload.genreId);
 
-    async getMovies(pageNum) {
-        try {
-            return await movieRepository.getMovies(pageNum);
-        } catch (err) {
-            throw err;
-        }
+      let movie = await this[_buildMovie](payload, genre, user.email);
+      return await this.movieRepository.createMovie(movie);
+    } catch (err) {
+      throw err;
     }
+  }
 
-    async getMovieById(id) {
-        try {
-            return await movieRepository.getMovieById(id);
-        } catch (err) {
-            throw err;
-        }
+  async getMovies(searchTitle, sortField, sortOrder, pageNum) {
+    try {
+      return await this.movieRepository.getMovies(
+        searchTitle,
+        sortField,
+        sortOrder,
+        pageNum
+      );
+    } catch (err) {
+      throw err;
     }
+  }
 
-    async updateMovie(id, payload) {
-        try {
-            return await movieRepository.updateMovie(id, payload);
-        } catch (err) {
-            throw err;
-        }
+  async getMovieById(id) {
+    try {
+      return await this.movieRepository.getMovieById(id);
+    } catch (err) {
+      throw err;
     }
+  }
 
-    async deleteMovie(id) {
-        try {
-            return await movieRepository.deleteMovie(id);
-        } catch (err) {
-            throw err;
-        }
+  async updateMovie(id, payload, user) {
+    try {
+      payload.updatedBy = await this.userRepository.getUserIdByEmail(user.email);
+      return await this.movieRepository.updateMovie(id, payload);
+    } catch (err) {
+      throw err;
     }
+  }
 
-    [_buildMovie](payload, genre) {
-        return new Movie({
-            title: payload.title,
-            genre: {
-                _id: genre._id,
-                name: genre.name
-            },
-            numberInStock: payload.numberInStock,
-            dailyRentalRate: payload.dailyRentalRate
-        });
+  async deleteMovie(id) {
+    try {
+      return await this.movieRepository.deleteMovie(id);
+    } catch (err) {
+      throw err;
     }
+  }
+
+  async [_buildMovie](payload, genre, email) {
+    let movie = new Movie({
+      title: payload.title,
+      genre: {
+        _id: genre._id,
+        name: genre.name
+      },
+      numberInStock: payload.numberInStock,
+      dailyRentalRate: payload.dailyRentalRate
+    });
+
+    try {
+      let userId = await this.userRepository.getUserIdByEmail(email);
+      movie.createdBy = userId;
+      movie.updatedBy = userId;
+      return movie;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = MovieService;

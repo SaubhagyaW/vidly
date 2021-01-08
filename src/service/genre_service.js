@@ -1,4 +1,3 @@
-const logger = require('winston');
 const _ = require('lodash');
 
 const { Genre } = require('../model/genre');
@@ -23,52 +22,52 @@ module.exports = class GenreService {
         }
     }
 
-    async getGenres(pageNum) {
+    async getGenres() {
         try {
-            return await this.genreRepository.getGenres(pageNum);
+            return await this.genreRepository.getGenres();
         } catch (err) {
             throw err;
         }
     }
 
-    async getGenreById(id) {
-        try {
-            return await this.genreRepository.getGenreById(id);
-        } catch (err) {
-            throw err;
-        }
-    }
+    // async getGenreById(id) {
+    //     try {
+    //         return await this.genreRepository.getGenreById(id);
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // }
 
-    async updateGenre(id, payload, user) {
-        try {
-            let genre = await this.genreRepository.getGenreById(id);
-            if (payload.name !== genre.name) {
-                logger.error('Genre.name field cannot be updated');
-                throw new Error('Genre.name field cannot be updated');
-            }
+    // async updateGenre(id, payload, user) {
+    //     try {
+    //         let genre = await this.genreRepository.getGenreById(id);
+    //         if (payload.name !== genre.name) {
+    //             logger.error('Genre.name field cannot be updated');
+    //             throw new Error('Genre.name field cannot be updated');
+    //         }
 
-            payload.updatedBy = await this.userRepository.getUserIdByEmail(user.email);
-            return await this.genreRepository.updateGenre(id, payload);
-        } catch (err) {
-            throw err;
-        }
-    }
+    //         payload.updatedBy = await this.userRepository.getUserIdByEmail(user.email);
+    //         return await this.genreRepository.updateGenre(id, payload);
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // }
 
-    async deleteGenre(id) {
-        try {
-            return await this.genreRepository.deleteGenre(id);
-        } catch (err) {
-            throw err;
-        }
-    }
+    // async deleteGenre(id) {
+    //     try {
+    //         return await this.genreRepository.deleteGenre(id);
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // }
 
     async [_buildGenre](payload, email) {
         let genre = new Genre(_.pick(payload, ['name']));
 
         try {
-            let user = await this.userRepository.getUserIdByEmail(email);
-            genre.createdBy = user._id;
-            genre.updatedBy = user._id;
+            let userId = await this.userRepository.getUserIdByEmail(email);
+            genre.createdBy = userId;
+            genre.updatedBy = userId;
             return genre;
         } catch (err) {
             throw err;

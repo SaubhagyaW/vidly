@@ -1,5 +1,7 @@
+const logger = require('winston');
 const express = require('express');
 
+const authenticate = require('../middleware/authenticate');
 const { validate } = require('../model/rental');
 const RentalService = require('../service/rental_service');
 
@@ -8,32 +10,47 @@ const rentalService = new RentalService();
 // Router to handle Rental requests
 const rentalRouter = express.Router();
 
-rentalRouter.post('/', async (req, res) => {
-    let { error } = validate(req.body);
-    if (error)
-        return res.status(400).send('Invalid request payload.');
+rentalRouter.post('/', authenticate, async (req, res, next) => {
+  ogger.info(`Request received to create Rental - ${JSON.stringify(req.body)}`);
 
-    try {
-        let result = await rentalService.createRental(req.body);
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+  let { error } = validate(req.body);
+  if (error)
+    return next({
+      statusCode: 400,
+      msg: `Invalid request payload - ${JSON.stringify(req.body)}`
+    });
+
+  try {
+    let result = await rentalService.createRental(req.body, req.user);
+    logger.info(`Rental created - ${JSON.stringify(result)}`);
+
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
-rentalRouter.get('/', async (req, res) => {
-    let pageNum = req.query.pageNum || 1;
+rentalRouter.get('/', authenticate, async (req, res, next) => {
+  logger.info('Request received to get all Rentals');
 
-    try {
-        let result = await rentalService.getRentals(pageNum);
+  const fromDate = req.query.fromDate;
+  const toDate = req.query.toDate;
+  const customerId = req.query.customerId;
+  const pageNum = req.query.pageNum;
 
-        if (!result)
-            return res.status(404).send('No Rental found.');
+  try {
+    let result = await rentalService.getRentals(
+      fromDate,
+      toDate,
+      customerId,
+      pageNum
+    );
 
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+    logger.info(`Get all Rentals - ${JSON.stringify(result)}`);
+    res.send(result);
+  } catch (err) {
+    return next({ statusCode: 500, err: err });
+  }
 });
 
 // rentalRouter.get('/:id', async (req, res) => {

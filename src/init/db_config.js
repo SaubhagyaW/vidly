@@ -8,14 +8,17 @@ const mongoDbUrl = `${config.get('database.MONGO_URL')}/${config.get('database.D
 // Initialize DB
 module.exports = function () {
     // DB connection
-    mongoose.connect(mongoDbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose
+        .connect(mongoDbUrl, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false
+        })
         .then(() => console.log('Connected to Mongo DB...'));
 
-    // DB configs
-    mongoose.set('useCreateIndex', true);
-    mongoose.set('useFindAndModify', false);
-    mongoose.set('runValidators', true);
-    mongoose.set('returnOriginal', false);
+    mongoose.set('runValidators', true)
+    mongoose.set('returnOriginal', false)
 
     // // Initialize "Fawn" package to handle Transactions (i.e. Two phase commits in Mongo DB)
     // Fawn.init(mongoose);

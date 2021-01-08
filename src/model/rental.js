@@ -90,6 +90,18 @@ const rentalSchema_mongoose = new mongoose.Schema({
         type: Number,
         min: 0
     },
+    createdBy: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    },
+    updatedBy: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+    },
     updatedAt: {
         type: Date,
         default: Date.now
